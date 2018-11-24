@@ -9,19 +9,28 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 
 import './App.css';
+
+import { Layout, Menu, Icon } from 'antd';
+const { Header, Content, Footer, Sider } = Layout;
 class App extends Component {
 
   constructor(props) {
     super(props);
-    const html = '<html><head><meta content="text/html; charset=UTF-8" http-equiv="content-type"><style type="text/css">ol{margin:0;padding:0}table td,table th{padding:0}.c0{color:#222222;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal}.c2{padding-top:0pt;padding-bottom:0pt;line-height:1.15;orphans:2;widows:2;text-align:left;height:11pt}.c4{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Arial";font-style:normal}.c1{color:#222222;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:9.5pt;font-family:"Arial";font-style:normal}.c3{padding-top:0pt;padding-bottom:0pt;line-height:1.15;orphans:2;widows:2;text-align:left}.c8{padding-top:0pt;padding-bottom:0pt;line-height:1.1500022727272727;orphans:2;widows:2;text-align:left}.c9{text-decoration:none;vertical-align:baseline;font-family:"Arial";font-style:normal}.c6{font-size:10pt;color:#222222;font-weight:700}.c10{color:#000000;font-weight:400;font-size:9.5pt}.c13{color:#000000;font-weight:400}.c14{max-width:487.3pt;padding:51.1pt 54pt 56.9pt 54pt}.c5{color:#222222;font-size:9.5pt}.c15{font-style:italic}.c11{font-size:10pt}.c7{background-color:#ffffff}.c12{color:#222222}.c16{color:#1155cc}.title{padding-top:0pt;color:#000000;font-size:26pt;padding-bottom:3pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}.subtitle{padding-top:0pt;color:#666666;font-size:15pt;padding-bottom:16pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}li{color:#000000;font-size:11pt;font-family:"Arial"}p{margin:0;color:#000000;font-size:11pt;font-family:"Arial"}h1{padding-top:20pt;color:#000000;font-size:20pt;padding-bottom:6pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h2{padding-top:18pt;color:#000000;font-size:16pt;padding-bottom:6pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h3{padding-top:16pt;color:#434343;font-size:14pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h4{padding-top:14pt;color:#666666;font-size:12pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h5{padding-top:12pt;color:#666666;font-size:11pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h6{padding-top:12pt;color:#666666;font-size:11pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;font-style:italic;orphans:2;widows:2;text-align:left}</style></head><body class="c7 c14"><p class="c3"><span class="c1">Dear Min-Han,</span></p><p class="c2"><span class="c1"></span></p><p class="c3"><span class="c5">Please see the attached for Report NPC GOLD-BL-SG-18-01012-180926.</span></p><p class="c3"><span class="c1">(I&#39;ve also uploaded the report to #report&gt;%inbox)</span></p><p class="c2"><span class="c1"></span></p><p class="c3"><span class="c1">SUMMARY</span></p><p class="c8"><span class="c1">NEGATIVE.</span></p><p class="c8"><span class="c5">EBV </span><span class="c5 c15">Bam</span><span class="c1">HI-W DNA absent or below the lower limit of detection.</span></p><p class="c2"><span class="c1"></span></p><p class="c3"><span class="c5">Ordering clinician: Dr. </span><span class="c9 c6">TAN MIN HAN</span></p><p class="c3"><span class="c11 c12">LUCENCE DIAGNOSTIC MEDICAL CENTRE</span></p><p class="c2"><span class="c0"></span></p><p class="c3"><span class="c11">(Acc ID: PLS-191) </span><span class="c11 c16">(Delay reporting. report sent out on 16/10/2018)Email: SG.ParkwayGenetics@parkwaypantai.com /cc joycepi.lim@parkwaypantai.com</span><span class="c9 c11 c13">&nbsp; // order tracking</span></p><p class="c3"><span class="c0">Copied to: Parkway Laboratory Services Ltd</span></p><p class="c2"><span class="c0"></span></p><p class="c3"><span class="c1">Date Collected: 25 Sep 2018</span></p><p class="c3"><span class="c1">Date Received: 26 Sep 2018</span></p><p class="c3"><span class="c5">Expected TAT (5 working days): 10 Oct 2018</span></p><p class="c2"><span class="c0"></span></p><p class="c3"><span class="c1">Checklist for cross-checking.</span></p><p class="c2"><span class="c1"></span></p><p class="c3"><span class="c5">Right Sample ID - yes //</span><span class="c9 c6">BL-SG-18-01012</span></p><p class="c3"><span class="c5">Right Patient Name, Gender, MRN - yes &nbsp; //</span><span class="c6">TAN PHENG</span><span class="c5">, Female, </span><span class="c0">00064</span></p><p class="c3"><span class="c5">Right Test Ordered - yes &nbsp;//</span><span class="c6">NPC GOLD&trade; (EBV </span><span class="c6 c15">Bam</span><span class="c6 c9">HI-W CpG DNA)</span></p><p class="c3"><span class="c1">Right Date of Report- yes &nbsp; //12 Nov 2018</span></p><p class="c3"><span class="c5">Right Order ID - yes //</span><span class="c0">18-3371</span></p><p class="c3"><span class="c1">....</span></p><p class="c3"><span class="c1">INDICATION</span></p><p class="c3"><span class="c1">TESTING</span></p><p class="c2"><span class="c1"></span></p><p class="c3"><span class="c5">Purpose: Screening/</span><span class="c5 c7">Diagnosis/Monitoring</span></p><p class="c3"><span class="c1">Known disease and/or cancer: Yes (NPC) /No</span></p><p class="c2"><span class="c1"></span></p><p class="c3"><span class="c1">Thank you.</span></p><p class="c3"><span class="c1">Regards,</span></p><p class="c3"><span class="c1">Wai Min</span></p><p class="c2"><span class="c4"></span></p></body></html>';
+    const html = " "
     const contentBlock = htmlToDraft(html);
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
       const editorState = EditorState.createWithContent(contentState);
       this.state = {
         editorState,
+        showEditor: false,
+        collapsed: false,
       };
     }
+  }
+
+  componentDidMount() {
+
   }
 
   onEditorStateChange = (editorState) => {
@@ -30,32 +39,197 @@ class App extends Component {
     });
 
     const text = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    console.log(JSON.stringify(text));
+    console.log(JSON.stringify({
+      body: text
+    }));
   };
 
+  emailInputHandler = e => {
+    e.preventDefault();
+    const report = e.target.elements.report.value;
+    const result = e.target.elements.result.value;
+    const s3FileKey = e.target.elements.s3FileKey.value;
+    const template = e.target.elements.template.value;
+    const payload = {
+      body: {
+        base_template: 'reports/email-templates/'+template+'.html',
+        report: report,
+        result: result,
+        s3FileKey: s3FileKey
+      }
+    }
+
+    fetch('https://u00fm8uvw3.execute-api.us-east-1.amazonaws.com/Test/render', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(res => res.json())
+      .then(res => {
+        const html = res["body"]
+        const contentBlock = htmlToDraft(html);
+        if (contentBlock) {
+          const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+          const editorState = EditorState.createWithContent(contentState);
+          this.setState({
+            editorState,
+            showEditor: true,
+            report: report,
+            s3FileKey: s3FileKey
+          });
+        }
+        console.log(this.state.s3FileKey)
+      });
+
+  }
+  sendEmailHanlder = () => {
+    const htmlText = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
+    const payload = {
+      "body": {
+        "sender": "naingdev@gmail.com",
+        "receiver": "naingaye.thet@lucencedx.com",
+        "subject": this.state.subject,
+        "report": this.state.report,
+        "s3FileKey": this.state.s3FileKey,
+        "html_body": htmlText
+      }
+    }
+
+    fetch('https://wqavh73jnl.execute-api.us-east-1.amazonaws.com/test/email', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(res => res.json())
+      .then(res => {
+        alert(JSON.stringify(res));
+      });
+
+  }
+  toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  }
   render() {
     const { editorState } = this.state;
-    return (
-      <div className="App">
-        <header className="App-header">
-
-            Learn React
-
-        </header>
-        <div style={{margin:"50px",padding:"40px",border:"3px solid blue"}}>
-
-
-        <Editor 
-          editorState={editorState}
-          wrapperClassName="demo-wrapper"
-          editorClassName="demo-editor"
-          onEditorStateChange={this.onEditorStateChange}
-        />
-   
-  
-
+    const emailInput = (
+      <div className="ant-card ant-card-bordered" style={{ textAlign: "left" }}>
+        <div className="ant-card-head">
+          <div class="ant-card-head-title">Create Email</div>
         </div>
+        <div className="ant-card-body">
+          <form onSubmit={this.emailInputHandler} style={{ paddingLeft: "200px", paddingRight: "200px" }}>
+            <div className="form-group row">
+              <label for="inputReport" class="col-sm-2 col-form-label">Report</label>
+              <div className="col-sm-10">
+                <input type="text" name="report" class="form-control" id="inputReport" placeholder="Report name" />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label for="inputResult" class="col-sm-2 col-form-label">Result</label>
+              <div className="col-sm-10">
+                <input type="text" name="result" class="form-control" id="inputResult" placeholder="Result" />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label for="inputKey" class="col-sm-2 col-form-label">S3FileKey</label>
+              <div className="col-sm-10">
+                <input type="text" name="s3FileKey" class="form-control" id="inputKey" placeholder="S3 File Key" />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label for="inputTemplate" class="col-sm-2 col-form-label">Template</label>
+              <div className="col-sm-10">
+                <input type="text" name="template" class="form-control" id="inputTemplate" placeholder="Choose email template" />
+              </div>
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <input className="btn btn-primary" type="submit" value="Create Email" />
+            </div>
+          </form>
+        </div>
+
+
+
       </div>
+    );
+
+    const emailEditor = (
+      <div style={{ padding: '20px' }}>
+        <div className="form-group row">
+          <label for="subject" className="col-sm-1 col-form-label" style={{ textAlign: 'left' }}>Subject:</label>
+          <div className="col-sm-11">
+            <input type="text" className="form-control" id="subject" placeholder="Subject" onChange={(e) => this.setState({ subject: e.target.value })} />
+          </div>
+        </div>
+
+        <div style={{ padding: "20px", border: "1px solid #ccc" }}>
+
+          <Editor
+            editorState={editorState}
+            wrapperClassName="demo-wrapper"
+            editorClassName="demo-editor"
+            onEditorStateChange={this.onEditorStateChange}
+          />
+        </div>
+        <div style={{ margin: "10px", textAlign: "right" }}>
+          <button className="btn btn-primary" onClick={this.sendEmailHanlder} style={{ marginRight: "20px" }}>Send Email</button>
+          <button className="btn btn-danger" onClick={() => this.setState({ showEditor: false })}>Back</button>
+        </div>
+
+      </div>
+    );
+
+    const body = this.state.showEditor ? emailEditor : emailInput;
+    return (
+
+      // <div className="App">
+      //   <header className="App-header">
+      //     Email Demo
+      //   </header>
+      //   {body}
+
+      // </div>
+      <Layout>
+        <Sider
+
+          trigger={null}
+          collapsible
+          collapsed={this.state.collapsed}
+        >
+          <div className="logo" />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+            <h3 style={{ color: 'white', margin: '20px' }}>Email Demo</h3>
+            <Menu.Item key="1">
+              <Icon type="mail" />
+              <span>email</span>
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Layout>
+          <Header style={{ background: '#fff', padding: 0 }}>
+            <Icon
+              className="trigger"
+              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+              onClick={this.toggle}
+            />
+          </Header>
+          <div style={{ minHeight: '100vh' }}>
+            <Content style={{ margin: '24px 16px', background: '#fff' }}>
+              {body}
+            </Content>
+          </div>
+
+        </Layout>
+      </Layout>
+
+
+
     );
   }
 }
