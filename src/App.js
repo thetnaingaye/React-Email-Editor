@@ -10,7 +10,7 @@ import htmlToDraft from 'html-to-draftjs';
 
 import './App.css';
 
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Spin } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 class App extends Component {
 
@@ -45,18 +45,21 @@ class App extends Component {
   };
 
   emailInputHandler = e => {
+
+    this.setState({
+      loading : true,
+      loadingMessage : 'Loading email template with data...'
+    })
     e.preventDefault();
     const report = e.target.elements.report.value;
     const result = e.target.elements.result.value;
     const s3FileKey = e.target.elements.s3FileKey.value;
     const template = e.target.elements.template.value;
     const payload = {
-      body: {
-        base_template: 'reports/email-templates/'+template+'.html',
-        report: report,
-        result: result,
-        s3FileKey: s3FileKey
-      }
+      base_template: 'reports/email-templates/' + template + '.html',
+      report: report,
+      result: result,
+      s3FileKey: s3FileKey
     }
 
     fetch('https://u00fm8uvw3.execute-api.us-east-1.amazonaws.com/Test/render', {
@@ -68,7 +71,8 @@ class App extends Component {
       body: JSON.stringify(payload)
     }).then(res => res.json())
       .then(res => {
-        const html = res["body"]
+        console.log(res)
+        const html = res["html"]
         const contentBlock = htmlToDraft(html);
         if (contentBlock) {
           const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
@@ -77,24 +81,30 @@ class App extends Component {
             editorState,
             showEditor: true,
             report: report,
-            s3FileKey: s3FileKey
+            s3FileKey: s3FileKey,
+            loading : false
           });
         }
         console.log(this.state.s3FileKey)
+      })
+      .catch(error => {
+        alert("template error")
       });
 
   }
   sendEmailHanlder = () => {
+    this.setState({
+      loading : true,
+      loadingMessage : 'Sending email...'
+    })
     const htmlText = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
     const payload = {
-      "body": {
-        "sender": "naingdev@gmail.com",
-        "receiver": "naingaye.thet@lucencedx.com",
-        "subject": this.state.subject,
-        "report": this.state.report,
-        "s3FileKey": this.state.s3FileKey,
-        "html_body": htmlText
-      }
+      "sender": "naingdev@gmail.com",
+      "receiver": "naingaye.thet@lucencedx.com",
+      "subject": this.state.subject,
+      "report": this.state.report,
+      "s3FileKey": this.state.s3FileKey,
+      "html_body": htmlText
     }
 
     fetch('https://wqavh73jnl.execute-api.us-east-1.amazonaws.com/test/email', {
@@ -104,9 +114,20 @@ class App extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
-    }).then(res => res.json())
+    })
       .then(res => {
-        alert(JSON.stringify(res));
+        if(!res.ok)
+          alert('Failed to send email')
+        else 
+          return res.json()
+      })
+      .then(res => {
+        alert('Email has been sent out successfully')
+        console.log(res)
+        this.setState({
+          showEditor: false,
+          loading : false
+        });
       });
 
   }
@@ -221,7 +242,8 @@ class App extends Component {
           </Header>
           <div style={{ minHeight: '100vh' }}>
             <Content style={{ margin: '24px 16px', background: '#fff' }}>
-              {body}
+              {this.state.loading && <Spin size="large" tip={this.state.loadingMessage}/>}
+              {!this.state.loading && body}
             </Content>
           </div>
 
