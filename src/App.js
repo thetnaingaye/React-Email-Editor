@@ -12,6 +12,8 @@ import './App.css';
 
 import { Layout, Menu, Icon, Spin } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
+
+const API_KEY = '6icGEuy0084AVWgbfFxWu98YndAd9nqF4TejoFBT'
 class App extends Component {
 
   constructor(props) {
@@ -47,8 +49,8 @@ class App extends Component {
   emailInputHandler = e => {
 
     this.setState({
-      loading : true,
-      loadingMessage : 'Loading email template with data...'
+      loading: true,
+      loadingMessage: 'Loading email template with data...'
     })
     e.preventDefault();
     const report = e.target.elements.report.value;
@@ -57,16 +59,19 @@ class App extends Component {
     const template = e.target.elements.template.value;
     const payload = {
       base_template: 'reports/email-templates/' + template + '.html',
-      report: report,
-      result: result,
-      s3FileKey: s3FileKey
+      data: {
+        report: report,
+        result: result,
+        s3FileKey: s3FileKey
+      }
     }
 
     fetch('https://u00fm8uvw3.execute-api.us-east-1.amazonaws.com/Test/render', {
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-api-key' : API_KEY
       },
       body: JSON.stringify(payload)
     }).then(res => res.json())
@@ -82,43 +87,48 @@ class App extends Component {
             showEditor: true,
             report: report,
             s3FileKey: s3FileKey,
-            loading : false
+            loading: false
           });
         }
         console.log(this.state.s3FileKey)
       })
       .catch(error => {
         alert("template error")
+        this.setState({
+          loading: false
+        });
       });
-
   }
+
   sendEmailHanlder = () => {
     this.setState({
-      loading : true,
-      loadingMessage : 'Sending email...'
+      loading: true,
+      loadingMessage: 'Sending email...'
     })
     const htmlText = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
     const payload = {
-      "sender": "naingdev@gmail.com",
-      "receiver": "naingaye.thet@lucencedx.com",
-      "subject": this.state.subject,
-      "report": this.state.report,
-      "s3FileKey": this.state.s3FileKey,
-      "html_body": htmlText
+      data:{
+        "sender": "naingdev@gmail.com",
+        "receiver": "naingaye.thet@lucencedx.com",
+        "subject": this.state.subject,
+        "s3FileKey": this.state.s3FileKey,
+        "html_body": htmlText
+      }
     }
 
     fetch('https://wqavh73jnl.execute-api.us-east-1.amazonaws.com/test/email', {
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-api-key' : API_KEY
       },
       body: JSON.stringify(payload)
     })
       .then(res => {
-        if(!res.ok)
+        if (!res.ok)
           alert('Failed to send email')
-        else 
+        else
           return res.json()
       })
       .then(res => {
@@ -126,9 +136,15 @@ class App extends Component {
         console.log(res)
         this.setState({
           showEditor: false,
-          loading : false
+          loading: false
         });
-      });
+      })
+      .catch(error => {
+        alert("email sending error")
+        this.setState({
+          loading: false
+        });
+      });;
 
   }
   toggle = () => {
@@ -174,9 +190,6 @@ class App extends Component {
             </div>
           </form>
         </div>
-
-
-
       </div>
     );
 
@@ -214,11 +227,9 @@ class App extends Component {
       //     Email Demo
       //   </header>
       //   {body}
-
       // </div>
       <Layout>
         <Sider
-
           trigger={null}
           collapsible
           collapsed={this.state.collapsed}
@@ -242,16 +253,12 @@ class App extends Component {
           </Header>
           <div style={{ minHeight: '100vh' }}>
             <Content style={{ margin: '24px 16px', background: '#fff' }}>
-              {this.state.loading && <Spin size="large" tip={this.state.loadingMessage}/>}
+              {this.state.loading && <Spin size="large" tip={this.state.loadingMessage} />}
               {!this.state.loading && body}
             </Content>
           </div>
-
         </Layout>
       </Layout>
-
-
-
     );
   }
 }
