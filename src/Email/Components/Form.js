@@ -1,6 +1,7 @@
 import { Form, Input, Tooltip, Icon, Button, Card } from 'antd';
 import React, { Component } from 'react';
-const FormItem = Form.Item;
+
+const FormItem = Form.Item
 
 
 class EmailForm extends Component {
@@ -28,7 +29,7 @@ class EmailForm extends Component {
                 sm: { span: 16 },
             },
         };
-        
+
         const tailFormItemLayout = {
             wrapperCol: {
                 xs: {
@@ -81,7 +82,7 @@ class EmailForm extends Component {
                         )}
                     </FormItem>
 
-                     <FormItem
+                    <FormItem
                         {...formItemLayout}
                         label={(
                             <span>
@@ -99,7 +100,7 @@ class EmailForm extends Component {
                         )}
                     </FormItem>
 
-                     <FormItem
+                    <FormItem
                         {...formItemLayout}
                         label={(
                             <span>

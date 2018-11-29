@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.10.8",
+    "aws-amplify": "^1.1.10",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
     "html-to-draftjs": "^1.4.0",

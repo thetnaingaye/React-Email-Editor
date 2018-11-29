@@ -46,7 +46,7 @@ class EmailEditor extends Component {
         const { editorState } = this.state;
 
         return (
-            <div style={{ padding: '20px' }}>
+            <div style={{ padding: '20px',backgroundColor:'#fff' }}>
                 <div className="ant-row ant-form-item">
                     <div className="ant-form-item-label ant-col-xs-24 ant-col-sm-24 ant-col-md-1 ant-col-lg-1">
                         <label htmlFor="subject" className="col-form-label">Subject</label>

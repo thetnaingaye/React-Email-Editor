@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EmailForm from './Components/Form'
 import EmailEditor from './Components/EmailEditor'
+import S3FileUpload from './Components/S3FileUpload'
 import { Spin } from 'antd';
 
 const API_KEY = 'yV7YBCFQiLaEokjcNYxS3gvuxn0VOQ27SUddlAef'
@@ -12,7 +13,7 @@ class Email extends Component {
 
         this.state = {
             showEditor: false,
-            loading : false
+            loading: false
         };
     }
 
@@ -139,8 +140,13 @@ class Email extends Component {
         const body = this.state.showEditor ? <EmailEditor html={this.state.html} back={this.backFromEditorHandler} send={this.sendEmailHandler} /> : <EmailForm emailRenderHandler={this.emailRenderHandler} />;
         return (
             <div>
-                {this.state.loading && <Spin size="large" tip={this.state.loadingMessage} />}
-                {!this.state.loading && body}
+                <div>
+                    {this.state.loading && <Spin size="large" tip={this.state.loadingMessage} />}
+                    {!this.state.loading && body}
+                </div>
+                <div style={{ backgroundColor: '#fff', marginTop: '20px' }}>
+                    {!this.state.showEditor && <S3FileUpload />}
+                </div>
             </div>
         );
     }

@@ -47,7 +47,7 @@ class App extends Component {
             />
           </Header>
           <div style={{ minHeight: '100vh' }}>
-            <Content style={{ margin: '24px 16px', background: '#fff' }}>
+            <Content style={{ margin: '24px 16px'}}>
               <Email />
             </Content>
           </div>
