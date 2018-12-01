@@ -5,8 +5,10 @@
   "dependencies": {
     "antd": "^3.10.8",
     "aws-amplify": "^1.1.10",
+    "aws-amplify-react": "^2.1.4",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
+    "file-saver": "^2.0.0",
     "html-to-draftjs": "^1.4.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

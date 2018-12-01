@@ -24,29 +24,29 @@ class EmailEditor extends Component {
 
     onEditorStateChange = (editorState) => {
         this.setState({
-          editorState,
+            editorState,
         });
-    
+
         const text = draftToHtml(convertToRaw(editorState.getCurrentContent()));
         console.log(JSON.stringify({
-          body: text
+            body: text
         }));
-      };
+    };
 
     sendEmailHanlder = () => {
         const subject = this.state.subject
         const html = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
         this.props.send({
-            subject : subject,
-            html : html
+            subject: subject,
+            html: html
         })
     }
-    
+
     render() {
         const { editorState } = this.state;
 
         return (
-            <div style={{ padding: '20px',backgroundColor:'#fff' }}>
+            <div style={{ padding: '20px', backgroundColor: '#fff' }}>
                 <div className="ant-row ant-form-item">
                     <div className="ant-form-item-label ant-col-xs-24 ant-col-sm-24 ant-col-md-1 ant-col-lg-1">
                         <label htmlFor="subject" className="col-form-label">Subject</label>
@@ -67,9 +67,9 @@ class EmailEditor extends Component {
                         onEditorStateChange={this.onEditorStateChange}
                     />
                 </div>
-                <div style={{ margin: "10px", textAlign: "right" }}>
-                    <button className="ant-btn ant-btn-primary" onClick={this.sendEmailHanlder} style={{ marginRight: "20px" }}>Send Email</button>
-                    <button className="ant-btn ant-btn-danger" onClick={this.props.back}>Back</button>
+                <div style={{ marginTop: "10px", textAlign: "right" }}>
+                    <button className="ant-btn ant-btn-default" onClick={this.props.back} style={{ marginRight: "20px" }}>Cancel</button>
+                    <button className="ant-btn ant-btn-primary" onClick={this.sendEmailHanlder} >Send Email</button>
                 </div>
             </div>
         );
