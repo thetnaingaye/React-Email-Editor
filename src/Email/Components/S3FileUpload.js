@@ -13,7 +13,9 @@ class S3FileUpload extends Component {
         this.state = {
             uploadFile: null,
             s3FileKey: this.props.s3FileKey,
-            report : this.props.report,
+            ldx_id: this.props.ldx_id,
+            type: this.props.type,
+            report: this.props.report
         }
         // this.listFiles()
         // this.uploadFile()
@@ -36,17 +38,23 @@ class S3FileUpload extends Component {
             });
 
             console.log("uploading to s3..." + this.state.uploadFile.name);
-            const path = `email-report-dev/reports/${fileNameWoExt}/${user}/${utcTimeStamp}/${file.name}`
+            const path = `email-report-dev/reports/${this.state.ldx_id}/${this.state.type}/${user}/${utcTimeStamp}/${file.name}`
             Storage.put(path, file, {
                 contentType: fileType
             })
                 .then(result => {
+                    const s3FileKey = 'public/' + result.key;
                     this.setState({
                         // uploadFile: null,
                         loading: false,
-                        s3FileKey: 'public/' + result.key,
+                        s3FileKey: s3FileKey,
                         report: fileNameWoExt
                     });
+
+                    this.props.updateProps({
+                        s3FileKey: s3FileKey,
+                        report: fileNameWoExt
+                    })
 
                     console.log("file uploaded and S3FileKey : ");
                     console.log('public/' + result.key);
@@ -167,7 +175,11 @@ class S3FileUpload extends Component {
                     fileList: null,
                     loading: false
                 })
-                this.forceUpdate();
+                this.props.updateProps({
+                    s3FileKey: '',
+                    report: ''
+                })
+                // this.forceUpdate();
                 message.success("File has successfully deleted from aws S3");
             })
             .catch(err => message.error(err));

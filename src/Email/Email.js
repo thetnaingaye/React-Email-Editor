@@ -7,7 +7,10 @@ import { Spin, Steps, Card, message } from 'antd';
 const API_KEY = 'yV7YBCFQiLaEokjcNYxS3gvuxn0VOQ27SUddlAef'
 
 const DEFAULT_FIELDS = {
-    report: {
+    ldx_id: {
+        value: '',
+    },
+    type: {
         value: '',
     },
     result: {
@@ -38,37 +41,58 @@ class Email extends Component {
 
     emailInputHandler = values => {
         console.log(values)
-        const report = values['report'];
-        const s3FileKey = values['s3FileKey'];
-
+        const ldx_id = values['ldx_id'];
+        const type = values['type'];
+        // const report = values['report'];
+        const result = values['result'];
+        const template = values['template']
+        // const s3FileKey = values['s3FileKey'];
 
         this.setState({
-            report: report,
-            s3FileKey: s3FileKey,
+            // report: report,
+            ldx_id : ldx_id,
+            type : type,
+            result: result,
+            template: template,
             step: 1
         })
+
+        // this.setState({
+        //     report: report,
+        //     s3FileKey: s3FileKey,
+        //     step: 1
+        // })
     }
 
 
     emailRenderHandler = values => {
         console.log('from Main Render Handler')
         console.log(values)
-        const result = values['result'];
-        const template = values['template'];
+        const s3FileKey = values['s3FileKey'];
+        const report = values['report'];
 
         this.setState({
             loading: true,
             loadingMessage: 'Loading email template with data...',
-            result: result,
-            template: template,
+            s3FileKey: s3FileKey,
+            report : report
         })
+        // const result = values['result'];
+        // const template = values['template'];
+
+        // this.setState({
+        //     loading: true,
+        //     loadingMessage: 'Loading email template with data...',
+        //     result: result,
+        //     template: template,
+        // })
 
         const payload = {
-            base_template: 'public/email-report-dev/templates/' + template + '.html',
+            base_template: 'public/email-report-dev/templates/' + this.state.template + '.html',
             data: {
-                report: this.state.report,
-                result: result,
-                s3FileKey: this.state.s3FileKey
+                report: report,
+                result: this.state.result,
+                s3FileKey: s3FileKey
             }
         }
 
@@ -151,6 +175,7 @@ class Email extends Component {
                     loading: false,
                     step: 0,
                     fields: DEFAULT_FIELDS,
+                    s3FileKey: null,
                 });
             })
             .catch(error => {
@@ -166,7 +191,7 @@ class Email extends Component {
         const step = 0;
         this.setState({
             showEditor: false,
-            step: this.state.step>0? this.state.step-1 : 0
+            step: this.state.step > 0 ? this.state.step - 1 : 0
         })
     }
 
@@ -182,18 +207,24 @@ class Email extends Component {
         }));
     }
 
+    upDatePropsFromS3FileUpload = (values) => {
+        this.setState({
+            s3FileKey: values['s3FileKey'],
+            report : values ['report']
+        })
+    }
 
     render() {
         const fields = this.state.fields;
-        fields.report.value = this.state.report;
+        // fields.report.value = this.state.report;
 
         let body = {}
         switch (this.state.step) {
             case 0:
-                body = (<S3FileUpload back={this.backHandler} emailRenderHandler={this.emailInputHandler} s3FileKey={this.state.s3FileKey} report={this.state.report}/>)
+                body = (<EmailForm {...fields} onChange={this.handleFormChange} emailRenderHandler={this.emailInputHandler} back={this.backHandler} />)
                 break;
             case 1:
-                body = (<EmailForm {...fields} onChange={this.handleFormChange} emailRenderHandler={this.emailRenderHandler} back={this.backHandler} />)
+                body = (<S3FileUpload back={this.backHandler} emailRenderHandler={this.emailRenderHandler} s3FileKey={this.state.s3FileKey} ldx_id={this.state.ldx_id} type={this.state.type} report={this.state.report} updateProps={this.upDatePropsFromS3FileUpload} />)
                 break;
             case 2:
                 body = (<EmailEditor html={this.state.html} back={this.backHandler} send={this.sendEmailHandler} />)
@@ -207,8 +238,8 @@ class Email extends Component {
             <Card title="Send email for review">
                 <div style={{ paddingLeft: '150px', paddingRight: '150px', backgroundColor: '#fff', marginBottom: '40px' }}>
                     <Steps current={this.state.step} >
+                        <Step title="General" />
                         <Step title="Upload Report" />
-                        <Step title="Input & Select Template" />
                         <Step title="Review & Send" />
                     </Steps>
                 </div>

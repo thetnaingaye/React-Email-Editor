@@ -46,21 +46,40 @@ class EmailForm extends Component {
             <div>
                 <Card bordered={false}>
                     <Form onSubmit={this.handleSubmit}>
+
                         <FormItem
                             {...formItemLayout}
                             label={(
                                 <span>
-                                    Report&nbsp;
-                                <Tooltip title="Report Name">
+                                    Lucence ID&nbsp;
+                                <Tooltip title="Lucence ID">
                                         <Icon type="question-circle-o" />
                                     </Tooltip>
                                 </span>
                             )}
                         >
-                            {getFieldDecorator('report', {
-                                rules: [{ required: true, message: 'Please input report name', whitespace: true }],
+                            {getFieldDecorator('ldx_id', {
+                                rules: [{ required: true, message: 'Please input Lucence ID', whitespace: true }],
                             })(
-                                <Input disabled/>
+                                <Input />
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            {...formItemLayout}
+                            label={(
+                                <span>
+                                    Type&nbsp;
+                                <Tooltip title="Test Type">
+                                        <Icon type="question-circle-o" />
+                                    </Tooltip>
+                                </span>
+                            )}
+                        >
+                            {getFieldDecorator('type', {
+                                rules: [{ required: true, message: 'Please input test name', whitespace: true }],
+                            })(
+                                <Input />
                             )}
                         </FormItem>
 
@@ -118,9 +137,13 @@ export default Form.create({
     },
     mapPropsToFields(props) {
         return {
-            report: Form.createFormField({
-                ...props.report,
-                value: props.report.value,
+            ldx_id: Form.createFormField({
+                ...props.ldx_id,
+                value: props.ldx_id.value,
+            }),
+            type: Form.createFormField({
+                ...props.type,
+                value: props.type.value,
             }),
             result: Form.createFormField({
                 ...props.result,
